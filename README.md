@@ -5,7 +5,7 @@ IRC bot skeleton using pydle
 * Modular - can hot-reload modules
 * Command rate-limiting [depends on the **log** module]
 * Can evaluate lines of python code, useful for debugging (admin only)
-* Checks if admins/owner is identified, auto ops them
+* Checks if admins/owner are identified, auto ops them
 * Will try to rejoin a channel if kicked
 * Will regain its nick when it becomes available
 
