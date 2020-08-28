@@ -102,9 +102,13 @@ class Bot(pydle.Client):
         return
 
     async def on_join(self, channel, source):
-        if await self.is_owner(source):
-            await self.set_mode(channel, 'o', source)
-        return
+        try:
+            if await self.is_owner(source):
+                await self.set_mode(channel, 'o', source)
+            return
+
+        except UnboundLocalError:
+            return
 
     async def on_kick(self, channel, target, by, reason):
         await self.join(channel)
