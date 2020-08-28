@@ -3,7 +3,7 @@
 IRC bot skeleton using pydle
 
 * Modular - can hot-reload modules
-* Command rate-limiting
+* Command rate-limiting [depends on the **log** module]
 * Can evaluate lines of python code, useful for debugging (admin only)
 * Will try to rejoin a channel if kicked
 * Will regain its nick when it becomes available
