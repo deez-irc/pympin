@@ -6,7 +6,7 @@ IRC bot skeleton using pydle
 * Command rate-limiting
 * Can evaluate lines of python code, useful for debugging (admin only)
 * Will try to rejoin a channel if kicked
-* Will regain it's nick when it becomes available
+* Will regain its nick when it becomes available
 
 Modules
 * ibip - Complies with the big meme, [IRC Bot Identification Protocol](https://github.com/inexist3nce/IBIP)
