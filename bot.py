@@ -41,6 +41,19 @@ class Bot(pydle.Client):
 
         return
 
+    async def is_admin(self, source):
+        """Check if user is an admin."""
+        if source in self.admins:
+            info = await self.whois(source)
+            admin = info['identified']
+        return admin
+
+    async def is_owner(self, source):
+        if source in self.owner:
+            info = await self.whois(source)
+            owner = info['identified']
+        return owner
+
     async def module_reload(self, target, source, message):
         """Attempt to reload a module."""
         if source not in self.admins:
@@ -88,9 +101,9 @@ class Bot(pydle.Client):
         )
         return
 
-    async def on_join(self, channel, user):
-        if user == self.owner:
-            await self.set_mode(channel, 'o', user)
+    async def on_join(self, channel, source):
+        if self.isowner(source):
+            await self.set_mode(channel, 'o', source)
         return
 
     async def on_kick(self, channel, target, by, reason):
@@ -149,50 +162,18 @@ class Bot(pydle.Client):
 
         elif message[0].startswith('.join'):
             # join a channel or channels
-            if source != self.owner:
-                return
-            else:
+            if self.is_owner(source):
                 await self.join(message[1])
 
         elif message[0].startswith('.quit'):
             # quit IRC and exit the program
-            if source in self.admins:
+            if self.is_owner(source):
                 await self.quit()
 
         elif message[0].startswith('.reload'):
             # attempt to reload a Python module
-            await self.module_reload(target, source, message)
-
-        elif message[0].startswith('.report'):
-            # prepare a report on current channel/user (owner only for now)
-            if source != self.owner:
-                return
-
-            try:
-                if message[1] and message[1] in self.channels[target]['users']:
-                    bytes_logged = log.bytes_logged(
-                        self.network,
-                        target,
-                        source,
-                        message[1]
-                    )
-                    await self.message(
-                        target,
-                        f"{source}: {message[1]} has sent a total of " +
-                        f"{bytes_logged} bytes to {target}."
-                    )
-
-            except IndexError:
-                bytes_logged = log.bytes_logged(
-                    self.network,
-                    target,
-                    source
-                )
-                await self.message(
-                    target,
-                    f"{source}: I have logged {bytes_logged} bytes " +
-                    f"of messages on {target}."
-                )
+            if self.is_admin(source):
+                await self.module_reload(target, source, message)
 
         elif message[0].startswith('.uptime'):
             # display uptime
