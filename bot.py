@@ -102,7 +102,7 @@ class Bot(pydle.Client):
         return
 
     async def on_join(self, channel, source):
-        if self.isowner(source):
+        if await self.is_owner(source):
             await self.set_mode(channel, 'o', source)
         return
 
@@ -162,17 +162,17 @@ class Bot(pydle.Client):
 
         elif message[0].startswith('.join'):
             # join a channel or channels
-            if self.is_owner(source):
+            if await self.is_owner(source):
                 await self.join(message[1])
 
         elif message[0].startswith('.quit'):
             # quit IRC and exit the program
-            if self.is_owner(source):
+            if await self.is_owner(source):
                 await self.quit()
 
         elif message[0].startswith('.reload'):
             # attempt to reload a Python module
-            if self.is_admin(source):
+            if await self.is_admin(source):
                 await self.module_reload(target, source, message)
 
         elif message[0].startswith('.uptime'):
