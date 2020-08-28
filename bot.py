@@ -100,7 +100,7 @@ class Bot(pydle.Client):
 
     async def on_join(self, channel, source):
         try:
-            if await self.is_owner(source):
+            if await self.is_owner(source) or await self.is_admin(source):
                 await self.set_mode(channel, 'o', source)
             return
 
