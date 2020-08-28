@@ -22,9 +22,6 @@ class Bot(pydle.Client):
 
     async def eval(self, target, source, message):
         """Evaluate some Python code. Quite useful for debugging."""
-        if source not in self.admins:
-            return  # admin only command
-
         expression = ' '.join(message[1:])
 
         try:
@@ -162,7 +159,8 @@ class Bot(pydle.Client):
 
         elif message[0].startswith('.eval'):
             # evaluate Python expressions, useful for debugging
-            await self.eval(target, source, message)
+            if await self.is_admin(source):
+                await self.eval(target, source, message)
 
         elif message[0].startswith('.join'):
             # join a channel or channels
