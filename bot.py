@@ -52,9 +52,6 @@ class Bot(pydle.Client):
 
     async def module_reload(self, target, source, message):
         """Attempt to reload a module."""
-        if source not in self.admins:
-            return
-
         try:
             importlib.reload(globals()[message[1]])
             await self.message(
