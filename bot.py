@@ -18,7 +18,6 @@ class Bot(pydle.Client):
         self.auto_joins = auto_joins
         self.real_nick = nickname
         self.timestamp = 0
-        self.triggered = 0
 
     async def eval(self, target, source, message):
         """Evaluate some Python code. Quite useful for debugging."""
