@@ -8,6 +8,7 @@ IRC bot skeleton using pydle
 * Checks if admins/owner are identified, auto ops them
 * Will try to rejoin a channel if kicked
 * Will regain its nick when it becomes available
+* Keeps track of its current uptime
 
 Modules
 * ibip - Complies with the big meme, [IRC Bot Identification Protocol](https://github.com/inexist3nce/IBIP)
